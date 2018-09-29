@@ -40,6 +40,17 @@ body {
     }
 }
 
+.notification-badge {
+    margin-top: -1;
+
+    .badge-fade {
+        background-color: #ebe8e8;
+    }
+
+    .badge-hint {
+        background-color: #d15b47 !important;
+    }
+}
 
 // Sticky footer styles
 

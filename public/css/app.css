@@ -8377,6 +8377,18 @@ body {
   margin-right: 8px;
 }
 
+.notification-badge {
+  margin-top: -1;
+}
+
+.notification-badge .badge-fade {
+  background-color: #ebe8e8;
+}
+
+.notification-badge .badge-hint {
+  background-color: #d15b47 !important;
+}
+
 html {
   position: relative;
   min-height: 100%;
