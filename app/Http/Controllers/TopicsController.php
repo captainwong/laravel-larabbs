@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\TopicRequest;
 use App\Models\Category;
 use App\Models\User;
+use App\Models\Link;
+
 use Auth;
 use App\Handlers\ImageUploadHandler;
 
@@ -18,12 +20,12 @@ class TopicsController extends Controller
         $this->middleware('auth', ['except' => ['index', 'show']]);
     }
 
-	public function index(Request $request, Topic $topic, User $user)
+	public function index(Request $request, Topic $topic, User $user, Link $link)
 	{
         $topics = Topic::withOrder($request->order)->paginate(30);
         $active_users = $user->getActiveUsers();
-        //dd($active_users);
-		return view('topics.index', compact('topics', 'active_users'));
+        $links = $link->getAllCached();
+		return view('topics.index', compact('topics', 'active_users', 'links'));
 	}
 
     public function show(Request $request, Topic $topic)
