@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Api\SocialAuthorizationRequest;
 use App\Http\Requests\Api\AuthorizationRequest;
 use Auth;
+use Zend\Diactoros\Response as Psr7Response;
+use Psr\Http\Message\ServerRequestInterface;
+use League\OAuth2\Server\Exception\OAuthServerException;
+use League\OAuth2\Server\AuthorizationServer;
 
 class AuthorizationsController extends Controller
 {
@@ -57,6 +61,7 @@ class AuthorizationsController extends Controller
         return $this->respondWithToken($token)->setStatusCode(201);
     }
 
+    // , AuthorizationServer $server, ServerRequestInterface $serverRequest
     public function store(AuthorizationRequest $request){
         $username = $request->username;
         filter_var($username, FILTER_VALIDATE_EMAIL) ? 
@@ -70,6 +75,12 @@ class AuthorizationsController extends Controller
         }
 
         return $this->respondWithToken($token)->setStatusCode(201);
+
+        // try{
+        //     return $server->respondToAccessTokenRequest($serverRequest, new Psr7Response)->withStatus(201);
+        // } catch(OAuthServerException $e){
+        //     return $this->response->errorUnauthorized($e->getMessage());
+        // }
     }
 
     protected function respondWithToken($token){
