@@ -3,7 +3,6 @@
 namespace App\Transformers;
 
 use App\Models\Topic;
-use League\Fractal\TransformerAbstract;
 
 class TopicTransformer extends TransformerAbstract
 {

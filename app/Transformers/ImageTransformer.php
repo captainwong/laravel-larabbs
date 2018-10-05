@@ -3,7 +3,6 @@
 namespace App\Transformers;
 
 use App\Models\Image;
-use League\Fractal\TransformerAbstract;
 
 class ImageTransformer extends TransformerAbstract
 {
