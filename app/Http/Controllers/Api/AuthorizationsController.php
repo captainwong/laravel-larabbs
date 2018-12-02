@@ -62,7 +62,7 @@ class AuthorizationsController extends Controller
         return $this->response->array($result)->setStatusCode(201);
     }
 
-    public function store(AuthorizationRequest $originRequest){
+    public function store(AuthorizationRequest $request){
         $username = $request->username;
         filter_var($username, FILTER_VALIDATE_EMAIL) ? 
             $credentials['email'] = $username :
