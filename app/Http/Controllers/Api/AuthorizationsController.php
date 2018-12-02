@@ -12,12 +12,9 @@ use Zend\Diactoros\Response as Psr7Response;
 use Psr\Http\Message\ServerRequestInterface;
 use League\OAuth2\Server\Exception\OAuthServerException;
 use League\OAuth2\Server\AuthorizationServer;
-use App\Traits\PassportToken;
 
 class AuthorizationsController extends Controller
 {
-    use PassportToken;
-
     public function socialStore($type, SocialAuthorizationRequest $request){
         if(!in_array($type, ['weixin'])){
             return $this->response->errorBadRequest();
@@ -65,27 +62,22 @@ class AuthorizationsController extends Controller
         return $this->response->array($result)->setStatusCode(201);
     }
 
-    public function store(AuthorizationRequest $originRequest, AuthorizationServer $server, ServerRequestInterface $serverRequest){
-        // $username = $request->username;
-        // filter_var($username, FILTER_VALIDATE_EMAIL) ? 
-        //     $credentials['email'] = $username :
-        //     $credentials['phone'] = $username;
+    public function store(AuthorizationRequest $originRequest){
+        $username = $request->username;
+        filter_var($username, FILTER_VALIDATE_EMAIL) ? 
+            $credentials['email'] = $username :
+            $credentials['phone'] = $username;
 
-        // $credentials['password'] = $request->password;
+        $credentials['password'] = $request->password;
 
-        // if(!$token = \Auth::guard('api')->attempt($credentials)){
-        //     return $this->response->errorUnauthorized(trans('auth.failed'));
-        // }
-
-        // return $this->respondWithToken($token)->setStatusCode(201);
-
-        try{
-            return $server->respondToAccessTokenRequest($serverRequest, new Psr7Response)->withStatus(201);
-        } catch(OAuthServerException $e){
-            return $this->response->errorUnauthorized($e->getMessage());
+        if(!$token = \Auth::guard('api')->attempt($credentials)){
+            return $this->response->errorUnauthorized(trans('auth.failed'));
         }
+
+        return $this->respondWithToken($token)->setStatusCode(201);
     }
 
+    // 2018-12-2 22:03:54
     public function weappStore(WeappAuthorizationRequest $request){
         $code = $request->code;
 
