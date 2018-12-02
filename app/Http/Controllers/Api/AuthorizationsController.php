@@ -89,7 +89,7 @@ class AuthorizationsController extends Controller
 
         // 根据结果错误，说明code已过期或不正确，返回401错误
         if(isset($data['errcode'])){
-            return $this->response->errorUnauthorized('code 不正确: ' . $data['errmsg']);
+            return $this->response->errorUnauthorized('code 不正确');
         }
 
         // 找到openid对应的用户
@@ -121,7 +121,7 @@ class AuthorizationsController extends Controller
             // 获取对应用户
             $user = Auth::guard('api')->getUser();
             $attributes['weapp_openid'] = $data['openid'];
-        } 
+        }
 
         // 更新用户数据
         $user->update($attributes);
