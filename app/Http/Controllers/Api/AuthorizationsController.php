@@ -85,9 +85,11 @@ class AuthorizationsController extends Controller
         $miniProgram = \EasyWeChat::miniProgram();
         $data = $miniProgram->auth->session($code);
 
+        //dd($data);
+
         // 根据结果错误，说明code已过期或不正确，返回401错误
-        if(isset($data['errCode'])){
-            return $this->response->errorUnauthorized('code 不正确');
+        if(isset($data['errcode'])){
+            return $this->response->errorUnauthorized('code 不正确: ' . $data['errmsg']);
         }
 
         // 找到openid对应的用户
@@ -126,7 +128,7 @@ class AuthorizationsController extends Controller
 
         // 为对应用户创建JWT
         $token = Auth::guard('api')->fromUser($user);
-        return $this->responseWithToken($token)->setStatusCode(201);
+        return $this->respondWithToken($token)->setStatusCode(201);
     }
 
     protected function respondWithToken($token){
@@ -137,20 +139,12 @@ class AuthorizationsController extends Controller
         ]);
     }
 
-    public function update(AuthorizationServer $server, ServerRequestInterface $serverRequest){
-        //$token = Auth::guard('api')->refresh();
-        //return $this->respondWithToken($token);
-
-        try{
-            return $server->respondToAccessTokenRequest($serverRequest, new Psr7Response);
-        }catch(OAuthServerException $e){
-            return $this->response->errorUnauthorized($e->getMessage());
-        }
+    public function update(AuthorizationServer $server){
+        $token = Auth::guard('api')->refresh();
+        return $this->respondWithToken($token);
     }
 
     public function destroy(){
-        //Auth::guard('api')->logout();
-        $this->user()->token()->revoke();
-        return $this->response->noContent();
+        Auth::guard('api')->logout();
     }
 }

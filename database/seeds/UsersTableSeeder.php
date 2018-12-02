@@ -37,6 +37,7 @@ class UsersTableSeeder extends Seeder
 
         $user = User::find(1);
         $user->name = "Jack";
+        $user->phone = '18240888101';
         $user->email = 'qtk.jack@gmail.com';
         $user->avatar = 'http://os07mvnhm.bkt.clouddn.com/avatar-jack.jpg';
         $user->save();
