@@ -66,14 +66,14 @@ class UsersController extends Controller
             'name' => $request->name,
             'phone' => $verifyData['phone'],
             'password' => bcrypt($request->password),
-            'weapp_openid' => $data['weapp_openid'],
+            'weapp_openid' => $data['openid'],
             'weixin_session_key' => $data['session_key'],
         ]);
 
         \Cache::forget($request->verification_key);
 
         return $this->response->item($user, new UserTransformer())
-            ->setMata([
+            ->setMeta([
                 'access_token' => \Auth::guard('api')->fromUser($user),
                 'token_type' => 'Bearer',
                 'expires_in' => \Auth::guard('api')->factory()->getTTL() * 60,
