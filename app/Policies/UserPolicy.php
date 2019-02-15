@@ -19,7 +19,8 @@ class UserPolicy
         //
     }
 
-    public function udpate(User $currentUser, User $user){
+    public function update(User $currentUser, User $user)
+    {
         return $currentUser->id === $user->id;
     }
 }
