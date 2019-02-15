@@ -16,18 +16,18 @@ class UsersTableSeeder extends Seeder
 
         // 头像假数据
         $avatars = [
-            'https://fsdhubcdn.phphub.org/uploads/images/201710/14/1/s5ehp11z6s.png?imageView2/1/w/200/h/200',
-            'https://fsdhubcdn.phphub.org/uploads/images/201710/14/1/Lhd1SHqu86.png?imageView2/1/w/200/h/200',
-            'https://fsdhubcdn.phphub.org/uploads/images/201710/14/1/LOnMrqbHJn.png?imageView2/1/w/200/h/200',
-            'https://fsdhubcdn.phphub.org/uploads/images/201710/14/1/xAuDMxteQy.png?imageView2/1/w/200/h/200',
-            'https://fsdhubcdn.phphub.org/uploads/images/201710/14/1/ZqM7iaP4CR.png?imageView2/1/w/200/h/200',
-            'https://fsdhubcdn.phphub.org/uploads/images/201710/14/1/NDnzMutoxX.png?imageView2/1/w/200/h/200',
+            'https://iocaffcdn.phphub.org/uploads/images/201710/14/1/s5ehp11z6s.png',
+            'https://iocaffcdn.phphub.org/uploads/images/201710/14/1/Lhd1SHqu86.png',
+            'https://iocaffcdn.phphub.org/uploads/images/201710/14/1/LOnMrqbHJn.png',
+            'https://iocaffcdn.phphub.org/uploads/images/201710/14/1/xAuDMxteQy.png',
+            'https://iocaffcdn.phphub.org/uploads/images/201710/14/1/ZqM7iaP4CR.png',
+            'https://iocaffcdn.phphub.org/uploads/images/201710/14/1/NDnzMutoxX.png',
         ];
 
         $users = factory(User::class)
                             ->times(10)
                             ->make()
-                            ->each(function ($user, $index) use ($faker, $avatars){
+                            ->each(function ($user, $index) use ($faker, $avatars) {
                                 $user->avatar = $faker->randomElement($avatars);
                             });
 
@@ -39,14 +39,14 @@ class UsersTableSeeder extends Seeder
         $user->name = "Jack";
         $user->phone = '18240888101';
         $user->email = 'qtk.jack@gmail.com';
-        $user->avatar = 'http://os07mvnhm.bkt.clouddn.com/avatar-jack.jpg';
+        $user->avatar = 'https://wangyapeng-me-1251421422.cos.ap-shanghai.myqcloud.com/avatar-jack.jpg';
         $user->save();
         $user->assignRole('Founder');
 
         $user = User::find(2);
         $user->name = "Jacky";
         $user->email = 'jack@qq.com';
-        $user->avatar = 'http://os07mvnhm.bkt.clouddn.com/avatar-jack.jpg';
+        $user->avatar = 'https://wangyapeng-me-1251421422.cos.ap-shanghai.myqcloud.com/avatar-jack.jpg';
         $user->save();
         $user->assignRole('Maintainer');
     }
